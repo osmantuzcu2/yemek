@@ -1,6 +1,6 @@
 # mc_jsi
 
-A new Flutter project.
+A new Flutter project by Novem Softvare
 
 ## Getting Started
 
