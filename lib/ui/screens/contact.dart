@@ -46,7 +46,7 @@ class _ContactState extends State<Contact> {
     });
   }
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -86,8 +86,8 @@ class _ContactState extends State<Contact> {
                   
                  child: EasyGoogleMaps(
                   apiKey: 'AIzaSyBgchkOfryQJ3oRrXxrwKdkeguuZv8M7gQ',
-                  address: 'Infinite Loop, Cupertino, CA 95014',
-                  title: 'Restourant',
+                  address: 'Potthof 8, 48301 Nottuln, Almanya',
+                  title: 'Mc Jsi Restourant',
 
                   
               )

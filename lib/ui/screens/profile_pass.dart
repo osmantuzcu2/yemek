@@ -60,7 +60,7 @@ class _PasswordState extends State<Password> {
    
   }
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: bottomMenu(context,_scaffoldKey),

@@ -7,6 +7,7 @@ import 'package:mc_jsi/core/dbHelper.dart';
 import 'package:mc_jsi/core/functions.dart';
 import 'package:mc_jsi/core/inh.dart';
 import 'package:mc_jsi/ui/widgets.dart/appbar.dart';
+import 'package:mc_jsi/ui/widgets.dart/blue_bar.dart';
 import 'package:mc_jsi/ui/widgets.dart/bottom_menu.dart';
 import 'package:mc_jsi/ui/widgets.dart/drawer.dart';
 import 'package:mc_jsi/ui/widgets.dart/green_bar.dart';
@@ -183,7 +184,7 @@ class _BasketState extends State<Basket> {
   else toast('Adres seçmediniz');
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
@@ -196,6 +197,7 @@ class _BasketState extends State<Basket> {
     if (dataAddress.isEmpty) {
       _getAddresses();
     }
+
     return WillPopScope(
       onWillPop: _onWillPop,
           child: Scaffold(
@@ -225,7 +227,9 @@ class _BasketState extends State<Basket> {
               children: <Widget>[
                 Container(
                   color: green1,
-                  height: screenH(0.06, context),
+                  height: screenH(
+                  screenH(1, context) > 800 ? 0.04 : 0.06
+                    , context),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -389,6 +393,12 @@ class _BasketState extends State<Basket> {
                     ],
                   ),
                 ),
+               
+                  Cookie.of(context).orderType =="1"?
+                  blueBar(context, 'Gel Al', 'assets/comeget.svg'):
+                  Cookie.of(context).orderType =="2"?
+                  blueBar(context, 'Eve Servis', 'assets/service.svg'):Container(),
+                 
                 ListView.builder(
                   primary: false,
                   shrinkWrap: true,

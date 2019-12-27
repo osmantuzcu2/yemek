@@ -28,11 +28,28 @@ class _ProductListState extends State<ProductList> {
   String id;
   String search;
   _ProductListState({this.dataFoods,this.id,this.search});
-
+  var dataList = new List<Foods>();
+  _getFoods() {
+    Future getFoods() {
+      var url = Constants.generalBaseUrl + '/api/food.php?process=getid_foods';
+      return http.get(url);
+    }
+    getFoods().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        dataList = list.map((model) => Foods.fromJson(model)).toList();
+        var boddy = json.decode(response.body);
+        if (boddy[0]['status'] == 'true') {
+         print(Constants.generalBaseUrl+boddy[0]["image"]);
+        }
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    _getFoods();
     if (search == null) {
      _getFoodDetails();  
       
@@ -73,7 +90,7 @@ class _ProductListState extends State<ProductList> {
       });
     });
   }
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,12 +129,19 @@ class _ProductListState extends State<ProductList> {
                   scrollDirection: Axis.horizontal,
                   itemCount: dataFoods.length,
                   itemBuilder: (context,index){
-                    return Container(
-                      margin: EdgeInsets.only(
-                        top: screenH(0.02, context)
-                      ),
-                      width: screenW(0.22, context), 
-                      child: Image.network(Constants.generalBaseUrl+ dataFoods[index].image),
+                    return GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(
+                         builder: (context) => ProductList(id: dataFoods[index].id,dataFoods: dataList,search: null,)
+                        ));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: screenH(0.02, context)
+                        ),
+                        width: screenW(0.22, context), 
+                        child: Image.network(Constants.generalBaseUrl+ dataFoods[index].image),
+                      )
                     );
                 },
                 ),
@@ -138,6 +162,8 @@ class _ProductListState extends State<ProductList> {
                            name: data[index].name,
                            image : data[index].image,
                            price: data[index].price,
+                           price_small : data[index].price_small,
+                           price_big : data[index].price_big,
                          )
                         ));
                       },
@@ -217,6 +243,8 @@ class FoodDetail {
     String description;
     String price;
     String image;
+    String price_small;
+    String price_big;
 
     FoodDetail({
         this.id,
@@ -225,6 +253,8 @@ class FoodDetail {
         this.description,
         this.price,
         this.image,
+        this.price_small,
+        this.price_big,
     });
 
     factory FoodDetail.fromJson(Map<String, dynamic> json) => FoodDetail(
@@ -234,6 +264,8 @@ class FoodDetail {
         description: json["description"],
         price: json["price"],
         image: json["image"],
+        price_small: json["price_small"],
+        price_big: json["price_big"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -243,5 +275,7 @@ class FoodDetail {
         "description": description,
         "price": price,
         "image": image,
+        "price_small": price_small,
+        "price_big": price_big,
     };
 }

@@ -18,7 +18,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   var searchText = TextEditingController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _scaffoldKey2 = new GlobalKey<ScaffoldState>();
+  var _scaffoldKey3 = new GlobalKey<ScaffoldState>();
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
@@ -31,7 +32,7 @@ class _HomeState extends State<Home> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child:Scaffold(
-        key: _scaffoldKey,
+        key: _scaffoldKey2,
         endDrawer: drawer(context),
         body: Stack(
           children: <Widget>[
@@ -112,6 +113,7 @@ class _HomeState extends State<Home> {
                   GestureDetector(
                     onTap: () {
                       Cookie.of(context).setOrderType('1');
+                      Cookie.of(context).setMenuPosition('99');
                       Navigator.pushNamed(context, Constants.ROUTE_COME_GET);
                     },
                     child: whiteBar(context, 'Gel Al', 'assets/comeget.svg'),
@@ -119,6 +121,7 @@ class _HomeState extends State<Home> {
                   GestureDetector(
                       onTap: () {
                         Cookie.of(context).setOrderType('2');
+                      Cookie.of(context).setMenuPosition('99');
                         Navigator.pushNamed(
                             context, Constants.ROUTE_HOME_SERVICE);
                       },
@@ -126,6 +129,7 @@ class _HomeState extends State<Home> {
                           whiteBar(context, 'Eve Servis', 'assets/service.svg')),
                   GestureDetector(
                     onTap: () {
+                      Cookie.of(context).setMenuPosition('99');
                       Navigator.pushNamed(
                           context, Constants.ROUTE_RESERVATION_LIST);
                     },
@@ -137,7 +141,7 @@ class _HomeState extends State<Home> {
             ),
             Align(
                 alignment: Alignment.bottomCenter,
-                child: bottomMenu(context, _scaffoldKey))
+                child: bottomMenu(context, _scaffoldKey3))
           ],
         ),
       ),

@@ -72,7 +72,7 @@ datePicker2() async{
     clock = formatDate(today, [HH,':',nn]);
 
   }
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

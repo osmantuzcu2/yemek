@@ -78,7 +78,7 @@ class _AddressState extends State<Address> {
     }
   }
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool exp_icon =true;
   Widget build(BuildContext context) {
     _getAddresses();

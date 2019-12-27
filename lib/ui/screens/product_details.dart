@@ -20,26 +20,33 @@ class ProductDetails extends StatefulWidget {
   final String name;
   final String image;
 final String price;
-  ProductDetails({Key key,this.id,this.name,this.image,this.price}) : super(key: key);
+final String price_small;
+final String price_big;
+  ProductDetails({Key key,this.id,this.name,this.image,this.price,this.price_small,this.price_big}) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState(
     id: id,
     name:name,
     image:image,
-    price:price
+    price:price,
+    price_small:price_small,
+    price_big:price_big
     );
 }
 List<ProductProperties> data = List<ProductProperties>();
 class _ProductDetailsState extends State<ProductDetails> {
 final String id;
-final String name;
+String name;
 final String image;
-final String price;
+String price;
+final String price_small;
+final String price_big;
 int amount=1;
+String pizzaboyu="Orta";
 bool _isChecked=false;
 
-_ProductDetailsState({this.id,this.name,this.image,this.price});
+_ProductDetailsState({this.id,this.name,this.image,this.price,this.price_small,this.price_big});
    var searchText = TextEditingController();
   @override
   void initState() {
@@ -82,7 +89,7 @@ _ProductDetailsState({this.id,this.name,this.image,this.price});
       });
     });
   }
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,17 +149,74 @@ _ProductDetailsState({this.id,this.name,this.image,this.price});
                   child: Container(
                     width: screenW(0.3, context),
                     color: Colors.white,
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.add,size: 32,color: Colors.green,),
-                        Text(amount.toString()+' Adet')
+                        Text(amount.toString() + " Adet")
                       ]
                     )
                   )
                 )
               ),
+              price_small != null?
+               Container(
+                padding: EdgeInsets.all(
+                  screenW(0.01, context),
+                ),
+                child: GestureDetector(
+                  onTap: (){
+                    showModalBottomSheet(builder: (BuildContext context) {
+                      return
+                      CupertinoPicker(
+                        children: <Widget>[
+                          Text(""),
+                          Text("Küçük"),
+                          Text("Orta"),
+                          Text("Büyük")
+                        ], 
+                        itemExtent: 40.0, 
+                        onSelectedItemChanged: (int value) {
+                          if(value == 1){
+                            setState(() {
+                              pizzaboyu = "Küçük";
+                              price = price_small;
+                            });
+                          }
+                          else if(value == 2){
+                            setState(() {
+                              pizzaboyu = "Orta";
+                            });
+                          }
+                          else if(value == 3){
+                            setState(() {
+                              pizzaboyu = "Büyük";
+                              price = price_big;
+                            });
+                          }
+                        },
+                        
+                      );
+                    }, 
+                    context: context
+                      
+                    );
+                  },
+                  child: Container(
+                    width: screenW(0.3, context),
+                    color: Colors.white,
+                    padding: EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add,size: 32,color: Colors.green,),
+                        Text(pizzaboyu)
+                      ]
+                    )
+                  )
+                )
+              ):Container(),
               Container(
                 padding: EdgeInsets.only(
                   left:screenW(0.1, context),
@@ -222,6 +286,9 @@ _ProductDetailsState({this.id,this.name,this.image,this.price});
               ),
              InkWell(
                onTap: (){
+                 if(price_small != null){
+                   name =  name + " " +  pizzaboyu; 
+                 }
                  DbHelper().initDB();
                  DbHelper().insertFood(id,name,amount,double.parse(price),image);
                  DbHelper().getFoods().then((data){
@@ -234,6 +301,7 @@ _ProductDetailsState({this.id,this.name,this.image,this.price});
                   
                },
                child: Card(
+                 color: green1,
                  shape: RoundedRectangleBorder(
                          borderRadius: BorderRadius.circular(10.0),
                        ),
@@ -252,6 +320,7 @@ _ProductDetailsState({this.id,this.name,this.image,this.price});
                          child: Text('Sepete Ekle',
                          style: TextStyle(
                            fontSize: 18,
+                           color: Colors.white,
                            fontWeight: FontWeight.w400
                          ),
                          ),
@@ -261,7 +330,7 @@ _ProductDetailsState({this.id,this.name,this.image,this.price});
                          child: Text("€ ",
                          textAlign: TextAlign.right,
                          style: TextStyle(
-                           color: green1,
+                           color: Colors.white,
                            fontSize: 18,
                            fontWeight: FontWeight.w400
                          ),
@@ -269,9 +338,10 @@ _ProductDetailsState({this.id,this.name,this.image,this.price});
                        ),
                         Expanded(
                          flex: 2,
-                         child: Text('19.00',
+                         child: Text(price,
                          style: TextStyle(
                            fontSize: 18,
+                           color: Colors.white,
                            fontWeight: FontWeight.bold
                          ),
                          ),

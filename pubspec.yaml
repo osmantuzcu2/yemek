@@ -30,6 +30,9 @@ dependencies:
   image_picker: ^0.6.1
   image: ^2.1.4
   easy_google_maps: ^1.0.0+2
+  flutter_cupertino_date_picker: ^1.0.12
+  google_sign_in: ^4.0.11
+#  video_player: ^0.10.3+3
 
 
 

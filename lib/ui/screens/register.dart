@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:mc_jsi/core/constants.dart';
@@ -6,6 +7,8 @@ import 'package:mc_jsi/core/functions.dart';
 import 'package:mc_jsi/core/inh.dart';
 import 'package:mc_jsi/ui/widgets.dart/widget_helpers.dart';
 import 'package:http/http.dart' as http;
+
+import 'home.dart';
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -172,6 +175,12 @@ class _RegisterState extends State<Register> {
    signInPasswordCont.text = '1234567';
   }
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  
+  }
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
@@ -281,8 +290,20 @@ class _RegisterState extends State<Register> {
                               print("Value : $value");
                             },
                             onTap: () {
-                              _selectDate(context);
-                            },
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                return 
+                              DatePickerWidget(
+                                onConfirm: (date,index){
+                                  _dateController.text = date.day.toString() +" - "+ 
+                                  date.month.toString() +" - "+ date.year.toString();
+                                },
+                              );
+                              },
+                                
+                              );
+                                                        },
                           ),
                         ),
                       ],
@@ -444,6 +465,18 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ),
+                    FlatButton(
+                      child: Text('Get in without Register',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline
+                      ),
+                      ),
+                      onPressed: (){
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home()), 
+                                              (Route<dynamic> route) => false
+                                              );
+                      },
+                    )
                   ],
                 ),
               ),
@@ -583,33 +616,38 @@ class _RegisterState extends State<Register> {
                               ),
                             ),
                           ),
-                          Row(
+                          /* Row(
                             children: <Widget>[
-                              Container(
-                                margin:
-                                    EdgeInsets.only(top: screenW(0.05, context)),
-                                padding: EdgeInsets.all(screenW(0.04, context)),
-                                width: screenW(0.4, context),
-                                height: screenH(0.08, context),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: google,
-                                ),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  children: <Widget>[
-                                    fireSvgwidthColor(
-                                        screenW(0.08, context),
-                                        'google',
-                                        'assets/google.svg',
-                                        Colors.white),
-                                    Container(width: screenW(0.05, context)),
-                                    Text(
-                                      'Google',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
-                                    ),
-                                  ],
+                              GestureDetector(
+                                onTap: (){
+                                  
+                                },
+                                child: Container(
+                                  margin:
+                                      EdgeInsets.only(top: screenW(0.05, context)),
+                                  padding: EdgeInsets.all(screenW(0.04, context)),
+                                  width: screenW(0.4, context),
+                                  height: screenH(0.08, context),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: google,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    children: <Widget>[
+                                      fireSvgwidthColor(
+                                          screenW(0.08, context),
+                                          'google',
+                                          'assets/google.svg',
+                                          Colors.white),
+                                      Container(width: screenW(0.05, context)),
+                                      Text(
+                                        'Google',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
@@ -644,7 +682,7 @@ class _RegisterState extends State<Register> {
                               ),
                             ],
                           ),
-                          Container(
+                           */Container(
                             height: screenH(0.08, context),
                             alignment: Alignment.center,
                             child: FlatButton(

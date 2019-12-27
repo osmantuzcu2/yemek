@@ -25,8 +25,11 @@ Widget drawer(context) {
                   decoration: new BoxDecoration(
                     color: Colors.lightBlue,
                     image: new DecorationImage(
-                      image: NetworkImage(
-                        'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg',
+                      image: 
+                      Cookie.of(context).userAvatarUrl== null?
+                      AssetImage('assets/profile.png'):
+                      NetworkImage(
+                        Constants.generalBaseUrl + Cookie.of(context).userAvatarUrl,
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -37,14 +40,31 @@ Widget drawer(context) {
                       decoration: new BoxDecoration(
                           color: Colors.black.withOpacity(0.6)),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
+                          
                           Container(
-                              width: screenW(0.2, context),
-                              padding:
-                                  EdgeInsets.only(top: screenW(0.1, context)),
-                              child: ClipOval(
-                                  child: Image.network(
-                                      'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg'))),
+               width: screenW(0.25, context),
+               height: screenW(0.25, context),
+               alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: screenH(0.20, context)),
+               decoration: new BoxDecoration(
+                 color: green1,
+                 image: new DecorationImage(
+                   image: 
+                      Cookie.of(context).userAvatarUrl== null?
+                      AssetImage('assets/profile.png'):
+                      new NetworkImage(
+                    Constants.generalBaseUrl+Cookie.of(context).userAvatarUrl),
+                   fit: BoxFit.cover,
+                 ),
+                 borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                 border: new Border.all(
+                   color: green1,
+                   width: 2.0,
+                 ),
+               ),
+           ),
                           Container(
                             padding: EdgeInsets.only(top: 5),
                             child: Text(

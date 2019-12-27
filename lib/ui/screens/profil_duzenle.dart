@@ -104,7 +104,7 @@ class _EditProfileState extends State<EditProfile> {
    
   }
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   var _dateController = new TextEditingController();
   DateTime selectedDate = DateTime.now();
