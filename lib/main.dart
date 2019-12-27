@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mc_jsi/core/inh.dart';
+import 'package:mc_jsi/locator.dart';
 import 'core/constants.dart';
 import 'core/routes.dart';
 void main() {

@@ -78,7 +78,7 @@ class _AddressState extends State<Address> {
     }
   }
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool exp_icon =true;
   Widget build(BuildContext context) {
     _getAddresses();
@@ -100,7 +100,7 @@ class _AddressState extends State<Address> {
               backgroundColor: Colors.white,
               flexibleSpace: FlexibleSpaceBar(
                   titlePadding: EdgeInsets.all(0),
-                  background: appBarProfile(context, true,'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg')
+                  background: appBarProfile(context, true,Cookie.of(context).userAvatarUrl)
                   ),
             ),
             
@@ -125,7 +125,6 @@ class _AddressState extends State<Address> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                             Icon(Icons.star,color: Colors.yellow[700],),
-                            Text('865 Puan',style: TextStyle(color: Colors.yellow[700],),)
                           ],),
                         
                           ListView.builder(
@@ -171,7 +170,7 @@ class _AddressState extends State<Address> {
                                                                 decoration:
                                                                     InputDecoration(
                                                                         hintText:
-                                                                            'Adress Name'),
+                                                                            'Adresse Name'),
                                                                 controller:
                                                                     adressInputN),
                                                           ),
@@ -183,7 +182,7 @@ class _AddressState extends State<Address> {
                                                                 decoration:
                                                                     InputDecoration(
                                                                         hintText:
-                                                                            'Your Adress'),
+                                                                            'Deine Adresse'),
                                                                 controller:
                                                                     adressInputA),
                                                           ),
@@ -193,7 +192,7 @@ class _AddressState extends State<Address> {
                                                                     10),
                                                             child: DialogButton(
                                                               child: Text(
-                                                                'DONE',
+                                                                'ERLEDIGT',
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .white),
@@ -208,7 +207,7 @@ class _AddressState extends State<Address> {
                                                 },
                                               );
                           },
-                          child: Text('Düzenle',
+                          child: Text('Bearbeiten',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             fontSize: 12,
@@ -218,7 +217,7 @@ class _AddressState extends State<Address> {
                         ),
                          FlatButton(
                           onPressed: (){},
-                          child: Text('Sil',
+                          child: Text('löschen',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             fontSize: 12,

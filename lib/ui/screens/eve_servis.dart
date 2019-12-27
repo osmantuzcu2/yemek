@@ -20,6 +20,7 @@ class HomeService extends StatefulWidget {
 }
 
 class _HomeServiceState extends State<HomeService> {
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
    var searchText = TextEditingController();
   @override
   void initState() {
@@ -44,7 +45,6 @@ class _HomeServiceState extends State<HomeService> {
     });
   }
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -73,7 +73,7 @@ class _HomeServiceState extends State<HomeService> {
           child:Column(
             children: <Widget>[
               greenbar(context),
-              blueBar(context, 'Eve Servis', 'assets/service.svg'),
+              blueBar(context, 'Liefern', 'assets/service.svg'),
                 Container(
                   padding:EdgeInsets.only(
                         right:screenW(0.05, context),

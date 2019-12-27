@@ -103,8 +103,7 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
    
   }
-  @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   var _dateController = new TextEditingController();
   DateTime selectedDate = DateTime.now();
@@ -125,6 +124,7 @@ class _EditProfileState extends State<EditProfile> {
       });
   }
  
+  @override
   Widget build(BuildContext context) {
     _getUser();
     return Scaffold(
@@ -192,11 +192,11 @@ class _EditProfileState extends State<EditProfile> {
                             controller: nameText,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Adınızı giriniz';
+                                return 'Geben Sie Ihren Vorname ein';
                               }
                               return null;
                             },
-                            decoration: input('First Name', 'Adınızı Giriniz'),
+                            decoration: input('Vorname', 'Geben Sie Ihren Vorname ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -212,12 +212,12 @@ class _EditProfileState extends State<EditProfile> {
                             controller: lastNameText,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Soyadınızı giriniz';
+                                return 'Geben Sie Ihren Nachnamen ein';
                               }
                               return null;
                             },
                             decoration:
-                                input('Last Name ', 'Soyadınızı Giriniz'),
+                                input('Nachname', 'Geben Sie Ihren Nachnamen ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -242,12 +242,12 @@ class _EditProfileState extends State<EditProfile> {
                             
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Doğum tarihinizi seçiniz';
+                                return 'Wähle deinen Geburtstag aus';
                               }
                               return null;
                             },
                             decoration: input(
-                                'Doğum Tarihi ', 'Doğum tarihinizi seçiniz'),
+                                'Geburtsdatum ', 'Wähle deinen Geburtstag aus'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -282,12 +282,12 @@ class _EditProfileState extends State<EditProfile> {
                             controller: telText,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Telefon numaranızı giriniz';
+                                return 'Geben Sie Ihre Telefonnummer ein';
                               }
                               return null;
                             },
                             decoration: input(
-                                'Phone Number ', 'Telefon numaranızı giriniz'),
+                                'Telefonnummer ', 'Geben Sie Ihre Telefonnummer ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -331,7 +331,7 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                               ],
                           ),
-                          child: Text('GÜNCELLE',
+                          child: Text('Aktualisieren',
                           style: TextStyle(color:green1),
                           )),
                       )

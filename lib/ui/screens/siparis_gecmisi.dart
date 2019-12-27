@@ -21,7 +21,9 @@ class OrderHistory extends StatefulWidget {
 }
 
 class _OrderHistoryState extends State<OrderHistory> {
+  var iconstate = List<bool>();
   List<OrderStatus> data = List<OrderStatus>();
+  List<ExpandedOrder> dataExp = List<ExpandedOrder>();
   _getOrderHistory() {
     Future getOrderHistory() {
       var url = Constants.generalBaseUrl + '/api/orders.php?process=getid_orderstatus&userId='+Cookie.of(context).user_id;
@@ -35,7 +37,23 @@ class _OrderHistoryState extends State<OrderHistory> {
             list.map((model) => OrderStatus.fromJson(model)).toList();
         var boddy = json.decode(response.body);
         if (boddy[0]['status'] == 'true') {
-          
+          for (var i = 0; i < boddy.length; i++) {
+            iconstate.add(false);
+
+            var foodSplit =  data[i].foodDetailsName.split(",");
+            var foodPriceSplit = data[i].foodDetailsPrice.split(",");
+            var foodss = List<OrderDetail>();
+            var foodPricess = List<OrderDetail>();
+            for (var j = 0; j < foodSplit.length; j++) {
+              foodss.add(OrderDetail(val: foodSplit[j]));
+              foodPricess.add(OrderDetail(val: foodPriceSplit[j]));
+            }
+            foodss.add(OrderDetail(val: 'Extras'));
+            foodPricess.add(OrderDetail(val: data[i].food_sum_extras));
+            dataExp.add(ExpandedOrder(foods: foodss,foodsPrices: foodPricess));
+             // dataExp[i].foods.add(OrderDetail(foodname: foodAdd,foodPrice: foodPriceAdd));
+            
+          }
           
         }
       });
@@ -44,7 +62,13 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   void initState() {
     super.initState();
-   
+    /* var foodss = List<OrderDetail>();
+    var foodPricess = List<OrderDetail>();
+   for (var i = 0; i < 3; i++) {
+     foodss.add(OrderDetail(val: 'test'));
+     foodPricess.add(OrderDetail(val: 'test'));
+   }
+   dataExp.add(ExpandedOrder(foods: foodss,foodsPrices: foodPricess)); */
   }
   Future<bool> _onWillPop() {
     return showDialog(
@@ -53,8 +77,9 @@ class _OrderHistoryState extends State<OrderHistory> {
         ) ??
         false;
   }
+
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool exp_icon =true;
   Widget build(BuildContext context) {
     _getOrderHistory();
@@ -78,7 +103,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                 backgroundColor: Colors.white,
                 flexibleSpace: FlexibleSpaceBar(
                     titlePadding: EdgeInsets.all(0),
-                    background: appBarProfile(context, false,'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg')
+                    background: appBarProfile(context, false,Cookie.of(context).userAvatarUrl)
                     ),
               ),
               
@@ -102,7 +127,6 @@ class _OrderHistoryState extends State<OrderHistory> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                               Icon(Icons.star,color: Colors.yellow[700],),
-                              Text('865 Puan',style: TextStyle(color: Colors.yellow[700],),)
                             ],),
                           
                             ListView.builder(
@@ -112,18 +136,18 @@ class _OrderHistoryState extends State<OrderHistory> {
                     itemBuilder: (context, index) {
                       return ExpansionTile(
                         leading: Icon(
-                         exp_icon == true ? Icons.add : Icons.close,
+                         iconstate[index] == false ? Icons.add : Icons.close,
                           color: green1,
                         ),
                         onExpansionChanged: (val){
                           if (val==true) {
                             setState(() {
-                              this.exp_icon =false;
+                              iconstate[index] =true;
                             });
                           }else{
 
                             setState(() {
-                              this.exp_icon =true;
+                              iconstate[index] =false;
                             });
                           }
                         },
@@ -132,16 +156,16 @@ class _OrderHistoryState extends State<OrderHistory> {
                             Row(
                               children: <Widget>[
                                 Expanded(
-                                  flex: 4,
+                                  flex: 6,
                                   child: Text(
                                     data[index].orderDate==null?'':data[index].orderDate,
-                                    style: TextStyle(fontSize: 17),
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                 ),
                                
                                 Expanded(
-                                    flex: 1,
-                                    child: Text("€ "+data[index].totalAmount==null?'':data[index].totalAmount,
+                                    flex: 2,
+                                    child: Text(data[index].totalAmount==null?'':"€ "+data[index].totalAmount,
                                         style: TextStyle(
                                             color: Colors.grey, fontSize: 14))),
                                 
@@ -152,7 +176,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                 Expanded(
                                   flex: 4,
                                   child: Text(
-                                    'Sipariş Durumu',
+                                    'Auftragsstatus',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                 ),
@@ -162,7 +186,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     data[index].orderStatus,
                                     
                                     style: TextStyle(fontSize: 12,
-                                    color: data[index].orderStatus == 'Tamamlandı'? green1 : Colors.yellow[700]
+                                    color: data[index].orderStatus == 'fertiggestellt'? green1 : Colors.yellow[700]
                                     ),
                                   ),
                                 ),
@@ -190,43 +214,30 @@ class _OrderHistoryState extends State<OrderHistory> {
 
                               ),
                               child: Container(
-                                child:Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Expanded(flex:4,
-                                      child: Text('- Chicken Menu'),
-                                      ),
-                                      Expanded(flex: 1,
-                                      child: Text('€ 11'),
-                                      )
-                                    ],),
-                                    Row(children: <Widget>[
-                                      Expanded(flex:4,
-                                      child: Text('- Chicken Menu'),
-                                      ),
-                                      Expanded(flex: 1,
-                                      child: Text('€ 11'),
-                                      )
-                                    ],),
-                                    Row(children: <Widget>[
-                                      Expanded(flex:4,
-                                      child: Text('- Chicken Menu'),
-                                      ),
-                                      Expanded(flex: 1,
-                                      child: Text('€ 11'),
-                                      )
-                                    ],),
-                                    Row(children: <Widget>[
-                                      Expanded(flex:4,
-                                      child: Text('- Chicken Menu'),
-                                      ),
-                                      Expanded(flex: 1,
-                                      child: Text('€ 11'),
-                                      )
-                                    ],),
-                                  ],
-                                )
-                              )
+                                
+                               child: ListView.builder(
+                                 shrinkWrap: true,
+                                  physics: ClampingScrollPhysics(),
+                                  itemCount: dataExp[index].foods.length,
+                                  itemBuilder: (BuildContext context, int i) {
+                                  return 
+                                  Row(
+                                     children: <Widget>[
+                                       Expanded(
+                                         flex: 5,
+                                         child:
+                                         Text(dataExp[index].foods[i].val),
+                                       ),
+                                       Expanded(
+                                         flex: 2,
+                                         child:
+                                         Text("€" +dataExp[index].foodsPrices[i].val),
+                                       )
+                                     ],
+                                    );
+                                 },
+                                ),
+                               )
                               
                               )
                         ],
@@ -275,9 +286,9 @@ InputDecoration input(label, hint) {
 
 class OrderStatus {
     String address;
-    String foodDetailName;
-    String foodDetailAmount;
-    String sumExtras;
+    String foodDetailsName;
+    String foodDetailsPrice;
+    String food_sum_extras;
     String totalAmount;
     String discountAmount;
     String orderTypeDescription;
@@ -286,9 +297,9 @@ class OrderStatus {
 
     OrderStatus({
         this.address,
-        this.foodDetailName,
-        this.foodDetailAmount,
-        this.sumExtras,
+        this.foodDetailsName,
+        this.foodDetailsPrice,
+        this.food_sum_extras,
         this.totalAmount,
         this.discountAmount,
         this.orderTypeDescription,
@@ -298,9 +309,9 @@ class OrderStatus {
 
     factory OrderStatus.fromJson(Map<String, dynamic> json) => OrderStatus(
         address: json["address"],
-        foodDetailName: json["food_detail_name"],
-        foodDetailAmount: json["food_detail_amount"],
-        sumExtras: json["sum_extras"],
+        foodDetailsName: json["food_details_name"],
+        foodDetailsPrice: json["food_details_price"],
+        food_sum_extras: json["food_sum_extras"],
         totalAmount: json["totalAmount"],
         discountAmount: json["discount_amount"],
         orderTypeDescription: json["orderType_description"],
@@ -310,13 +321,31 @@ class OrderStatus {
 
     Map<String, dynamic> toJson() => {
         "address": address,
-        "food_detail_name": foodDetailName,
-        "food_detail_amount": foodDetailAmount,
-        "sum_extras": sumExtras,
+        "food_details_name": foodDetailsName,
+        "food_details_price": foodDetailsPrice,
+        "food_sum_extras": food_sum_extras,
         "totalAmount": totalAmount,
         "discount_amount": discountAmount,
         "orderType_description": orderTypeDescription,
         "order_status": orderStatus,
         "orderDate": orderDate,
     };
+}
+
+class ExpandedOrder{
+    List<OrderDetail> foods;
+    List<OrderDetail> foodsPrices;
+
+  ExpandedOrder({
+        this.foods,
+        this.foodsPrices
+        });
+}
+
+class OrderDetail{
+  String val;
+  OrderDetail({
+    this.val,
+  });
+
 }

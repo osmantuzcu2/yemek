@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:mc_jsi/core/constants.dart';
@@ -6,6 +7,8 @@ import 'package:mc_jsi/core/functions.dart';
 import 'package:mc_jsi/core/inh.dart';
 import 'package:mc_jsi/ui/widgets.dart/widget_helpers.dart';
 import 'package:http/http.dart' as http;
+
+import 'home.dart';
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -168,8 +171,14 @@ class _RegisterState extends State<Register> {
   @override
   void initState() { 
     super.initState();
-   signInemailCont.text = 'osmantuzcu@gmail.com';
-   signInPasswordCont.text = '1234567';
+   //signInemailCont.text = 'osmantuzcu@gmail.com';
+   //signInPasswordCont.text = '1234567';
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  
   }
   @override
   Widget build(BuildContext context) {
@@ -200,10 +209,10 @@ class _RegisterState extends State<Register> {
                       indicatorColor: green1,
                       tabs: <Widget>[
                         Tab(
-                          child: Text('Register'),
+                          child: Text('Registrieren'),
                         ),
                         Tab(
-                          child: Text('Login'),
+                          child: Text('Einloggen'),
                         ),
                       ],
                     )),
@@ -221,11 +230,11 @@ class _RegisterState extends State<Register> {
                             controller: signUpname,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Adınızı giriniz';
+                                return 'Geben Sie Ihren Vorname ein';
                               }
                               return null;
                             },
-                            decoration: input('First Name', 'Adınızı Giriniz'),
+                            decoration: input('Vorname', 'Geben Sie Ihren Vorname ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -241,12 +250,12 @@ class _RegisterState extends State<Register> {
                             controller: signUpsurname,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Soyadınızı giriniz';
+                                return 'Geben Sie Ihren Nachnamen ein';
                               }
                               return null;
                             },
                             decoration:
-                                input('Last Name ', 'Soyadınızı Giriniz'),
+                                input('Nachname ', 'Geben Sie Ihren Nachnamen ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -271,18 +280,30 @@ class _RegisterState extends State<Register> {
                             controller: _dateController,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Doğum tarihinizi seçiniz';
+                                return 'Wähle deinen Geburtstag aus';
                               }
                               return null;
                             },
                             decoration: input(
-                                'Doğum Tarihi ', 'Doğum tarihinizi seçiniz'),
+                                'Geburtsdatum ', 'Wähle deinen Geburtstag aus'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
                             onTap: () {
-                              _selectDate(context);
-                            },
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                return 
+                              DatePickerWidget(
+                                onConfirm: (date,index){
+                                  _dateController.text = date.day.toString() +" - "+ 
+                                  date.month.toString() +" - "+ date.year.toString();
+                                },
+                              );
+                              },
+                                
+                              );
+                                                        },
                           ),
                         ),
                       ],
@@ -306,12 +327,12 @@ class _RegisterState extends State<Register> {
                             controller: signUpemailR,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Email adresinizi giriniz';
+                                return 'Geben Sie Ihre E-Mail-Adresse ein';
                               }
                               return null;
                             },
                             decoration:
-                                input('Email ', 'Email adresinizi giriniz'),
+                                input('E-mail ', 'Geben Sie Ihre E-Mail-Adresse ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -338,12 +359,12 @@ class _RegisterState extends State<Register> {
                             controller: signUpphone,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Telefon numaranızı giriniz';
+                                return 'Geben Sie Ihre Telefonnummer ein';
                               }
                               return null;
                             },
                             decoration: input(
-                                'Phone Number ', 'Telefon numaranızı giriniz'),
+                                'Telefonnummer', 'Geben Sie Ihre Telefonnummer ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -371,11 +392,11 @@ class _RegisterState extends State<Register> {
                             controller: signUppassR,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Password';
+                                return 'Passwort';
                               }
                               return null;
                             },
-                            decoration: input('Password ', 'Password giriniz'),
+                            decoration: input('Passwort ', 'Geben Sie Ihr  Passwort ein'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -403,12 +424,12 @@ class _RegisterState extends State<Register> {
                             obscureText: true,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Confirm Password';
+                                return 'CKennwort bestätigen';
                               }
                               return null;
                             },
                             decoration:
-                                input('Confirm Password ', 'Confirm Password'),
+                                input('Kennwort bestätigen ', 'Kennwort bestätigen'),
                             onSaved: (String value) {
                               print("Value : $value");
                             },
@@ -439,11 +460,23 @@ class _RegisterState extends State<Register> {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          'REGISTER',
+                          'Registrieren',
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ),
                     ),
+                    FlatButton(
+                      child: Text('Get in without Register',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline
+                      ),
+                      ),
+                      onPressed: (){
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home()), 
+                                              (Route<dynamic> route) => false
+                                              );
+                      },
+                    )
                   ],
                 ),
               ),
@@ -472,10 +505,10 @@ class _RegisterState extends State<Register> {
                             indicatorColor: green1,
                             tabs: <Widget>[
                               Tab(
-                                child: Text('Register'),
+                                child: Text('Registrieren'),
                               ),
                               Tab(
-                                child: Text('Login'),
+                                child: Text('Einloggen'),
                               ),
                             ],
                           )),
@@ -495,12 +528,12 @@ class _RegisterState extends State<Register> {
                                   controller: signInemailCont,
                                   validator: (value) {
                                     if (value.isEmpty) {
-                                      return 'Email adresinizi giriniz';
+                                      return 'Geben Sie Ihre E-Mail-Adresse ein';
                                     }
                                     return null;
                                   },
                                   decoration:
-                                      input('Email ', 'Email adresinizi giriniz'),
+                                      input('Email ', 'Geben Sie Ihre E-Mail-Adresse ein'),
                                   onSaved: (String value) {
                                     print("Value : ");
                                   },
@@ -528,12 +561,12 @@ class _RegisterState extends State<Register> {
                                   controller: signInPasswordCont,
                                   validator: (value) {
                                     if (value.isEmpty) {
-                                      return 'Password';
+                                      return 'Passwort';
                                     }
                                     return null;
                                   },
                                   decoration:
-                                      input('Password ', 'Password giriniz'),
+                                      input('Passwort ', 'Geben Sie Ihr  Passwort ein'),
                                   onSaved: (String value) {
                                     print("Value : ");
                                   },
@@ -552,7 +585,7 @@ class _RegisterState extends State<Register> {
                                 forgot_password(email: signInemailCont.text);
                               },
                               child: Text(
-                                'Forgot Password',
+                                'Passwort vergessen',
                                 style:
                                     TextStyle(decoration: TextDecoration.underline),
                               ),
@@ -578,38 +611,43 @@ class _RegisterState extends State<Register> {
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                'LOGIN',
+                                'Einloggen',
                                 style: TextStyle(color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
-                          Row(
+                          /* Row(
                             children: <Widget>[
-                              Container(
-                                margin:
-                                    EdgeInsets.only(top: screenW(0.05, context)),
-                                padding: EdgeInsets.all(screenW(0.04, context)),
-                                width: screenW(0.4, context),
-                                height: screenH(0.08, context),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: google,
-                                ),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  children: <Widget>[
-                                    fireSvgwidthColor(
-                                        screenW(0.08, context),
-                                        'google',
-                                        'assets/google.svg',
-                                        Colors.white),
-                                    Container(width: screenW(0.05, context)),
-                                    Text(
-                                      'Google',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
-                                    ),
-                                  ],
+                              GestureDetector(
+                                onTap: (){
+                                  
+                                },
+                                child: Container(
+                                  margin:
+                                      EdgeInsets.only(top: screenW(0.05, context)),
+                                  padding: EdgeInsets.all(screenW(0.04, context)),
+                                  width: screenW(0.4, context),
+                                  height: screenH(0.08, context),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: google,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    children: <Widget>[
+                                      fireSvgwidthColor(
+                                          screenW(0.08, context),
+                                          'google',
+                                          'assets/google.svg',
+                                          Colors.white),
+                                      Container(width: screenW(0.05, context)),
+                                      Text(
+                                        'Google',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
@@ -644,13 +682,13 @@ class _RegisterState extends State<Register> {
                               ),
                             ],
                           ),
-                          Container(
+                           */Container(
                             height: screenH(0.08, context),
                             alignment: Alignment.center,
                             child: FlatButton(
                               onPressed: () {},
                               child: Text(
-                                'Forgot Password',
+                                'Passwort vergessen',
                                 style:
                                     TextStyle(decoration: TextDecoration.underline),
                               ),

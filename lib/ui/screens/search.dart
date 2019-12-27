@@ -17,7 +17,7 @@ class Search extends StatefulWidget {
 }
 class _SearchState extends State<Search> {
 var searchText = TextEditingController();
-final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 Future<bool> _onWillPop() {
     return showDialog(
           context: context,
@@ -100,7 +100,7 @@ Future<bool> _onWillPop() {
                         borderSide: BorderSide(color: Colors.grey),
                       ),
                       prefixIcon: Icon(Icons.search,color: Colors.grey,),
-                      hintText: 'Search Food',
+                      hintText: 'Essen suchen',
                       hintStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

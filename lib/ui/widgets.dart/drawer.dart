@@ -25,8 +25,10 @@ Widget drawer(context) {
                   decoration: new BoxDecoration(
                     color: Colors.lightBlue,
                     image: new DecorationImage(
-                      image: NetworkImage(
-                        'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg',
+                      image:Cookie.of(context).userAvatarUrl== null?
+                      AssetImage('assets/profile.png'):
+                       NetworkImage(
+                        Constants.generalBaseUrl + Cookie.of(context).userAvatarUrl,
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -37,14 +39,29 @@ Widget drawer(context) {
                       decoration: new BoxDecoration(
                           color: Colors.black.withOpacity(0.6)),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
+                          
                           Container(
-                              width: screenW(0.2, context),
-                              padding:
-                                  EdgeInsets.only(top: screenW(0.1, context)),
-                              child: ClipOval(
-                                  child: Image.network(
-                                      'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg'))),
+               width: screenW(0.25, context),
+               height: screenW(0.25, context),
+               alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: screenH(0.20, context)),
+               decoration: new BoxDecoration(
+                 color: green1,
+                 image: new DecorationImage(
+                   image: Cookie.of(context).userAvatarUrl== null?
+                      AssetImage('assets/profile.png'): NetworkImage(
+                    Constants.generalBaseUrl+Cookie.of(context).userAvatarUrl),
+                   fit: BoxFit.cover,
+                 ),
+                 borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                 border: new Border.all(
+                   color: green1,
+                   width: 2.0,
+                 ),
+               ),
+           ),
                           Container(
                             padding: EdgeInsets.only(top: 5),
                             child: Text(
@@ -59,7 +76,7 @@ Widget drawer(context) {
                               children: <Widget>[
                                 Icon(Icons.star, color: Colors.yellow[700]),
                                 Text(
-                                  '865 Puan',
+                                  '',
                                   style: TextStyle(color: Colors.yellow[700]),
                                 )
                               ],
@@ -85,7 +102,7 @@ Widget drawer(context) {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Text(
-                              'Sipariş Geçmişi',
+                              'Bestellhistorie',
                               style: TextStyle(color: Colors.grey[700]),
                             ),
                             Icon(Icons.history, color: Colors.grey[700]),
@@ -104,7 +121,7 @@ Widget drawer(context) {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Text(
-                              'Takvim',
+                              'Kalender',
                               style: TextStyle(color: Colors.grey[700]),
                             ),
                             Icon(Icons.calendar_today, color: Colors.grey[700]),
@@ -122,7 +139,7 @@ Widget drawer(context) {
                          mainAxisAlignment: MainAxisAlignment.end,
                          children: <Widget>[
                            Text(
-                             'Contact',
+                             'Kontakt',
                              style: TextStyle(color: Colors.grey[700]),
                            ),
                            Icon(Icons.help, color: Colors.grey[700]),
@@ -145,7 +162,7 @@ Widget drawer(context) {
                     width: double.infinity,
                     alignment: Alignment.center,
                     height: screenH(0.08, context),
-                    child: Text('Çıkış Yap',
+                    child: Text('Ausloggen',
                     style: TextStyle(color: Colors.white),
                     
                     ),

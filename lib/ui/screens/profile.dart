@@ -125,8 +125,8 @@ class _ProfileState extends State<Profile> {
     super.initState();
    
   }
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: bottomMenu(context,_scaffoldKey),
@@ -169,11 +169,11 @@ class _ProfileState extends State<Profile> {
                               children: <Widget>[
                               Icon(Icons.file_upload,color: Colors.yellow[700],),
                               FlatButton(
-                                child: Text('Upload Profile Picture',style: TextStyle(color: Colors.yellow[700],),),
+                                child: Text('Profilbild hochladen',style: TextStyle(color: Colors.yellow[700],),),
                                 onPressed: (){
                                    Alert(context: context, 
-                                        title: "PROFİL FOTOĞRAFI", 
-                                        desc: "Lütfen bir kaynak seçin",
+                                        title: "PROFIL FOTO", 
+                                        desc: "Bitte wählen Sie eine Quelle",
                                         buttons: [
                                           DialogButton(
                                             onPressed: (){
@@ -195,26 +195,19 @@ class _ProfileState extends State<Profile> {
                             GestureDetector(onTap: (){
                                 Navigator.pushNamed(context, Constants.ROUTE_EDIT_PROFILE);
                               },
-                              child: card(context,'Bilgileri Düzenle')),
+                              child: card(context,'Informationen bearbeiten')),
                             GestureDetector(
                               onTap: (){
                                 Navigator.pushNamed(context, Constants.ROUTE_PASSWORD);
                               },
-                              child: card(context, 'Şifre Değişikliği')),
+                              child: card(context, 'Passwort ändern')),
                            
                                GestureDetector(
                               onTap: (){
                                 Navigator.pushNamed(context, Constants.ROUTE_ADDRESS);
                               },
-                             child: card(context, 'Adreslerim'),),
-                            FlatButton(
-                                onPressed: (){},
-                                child: Text('Çıkış Yap',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline
-                                ),
-                                ),
-                              ),
+                             child: card(context, 'Meine Adresse'),),
+                           
                           ],
                         ),
                       

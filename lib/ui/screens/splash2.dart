@@ -73,8 +73,8 @@ Future<bool> checkConnection(context) async {
     
     Alert(
       context: context,
-      title: "CONNECTION PROBLEM",
-      desc: "Please check your internet connection",
+      title: "VERBINDUNGSPROBLEM",
+      desc: "Bitte überprüfe deine Internetverbindung",
       buttons: [
         DialogButton(
           onPressed: () {
@@ -82,7 +82,7 @@ Future<bool> checkConnection(context) async {
                 context, MaterialPageRoute(builder: (context) => Splash1()));
           },
           color: Colors.blue,
-          child: Text('Check Again'),
+          child: Text('Nochmal Überprüfen'),
         ),
       ],
     ).show();

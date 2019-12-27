@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_date_picker/rounded_date_picker.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:mc_jsi/core/constants.dart';
 import 'package:mc_jsi/core/functions.dart';
 import 'package:mc_jsi/ui/widgets.dart/appbar.dart';
@@ -50,7 +50,8 @@ class _ReservationAddState extends State<ReservationAdd> {
   );
 }
 datePicker2() async{
-  DateTime newDateTime = await RoundedDatePicker.show(context,
+  DateTime newDateTime = await showRoundedDatePicker(
+                            context:context,
                             initialDate: DateTime.now(), 
                             firstDate: DateTime(DateTime.now().year - 1), 
                             lastDate: DateTime(DateTime.now().year + 1), 
@@ -72,7 +73,7 @@ datePicker2() async{
     clock = formatDate(today, [HH,':',nn]);
 
   }
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +105,7 @@ datePicker2() async{
               Column(
                 children: <Widget>[
                   greenbar(context),
-                  blueBar(context, 'ReservationAdd', 'assets/calendar.svg'),
+                  blueBar(context, 'Tisch Reservieren', 'assets/calendar.svg'),
                   GestureDetector(
                     onTap: (){
                       datePicker2();
@@ -230,7 +231,7 @@ datePicker2() async{
                       child: TextField(
                         maxLines: 6,
                         decoration: InputDecoration(
-                          hintText: 'Notlar',
+                          hintText: 'Aufzeichnungen',
                           contentPadding: EdgeInsets.all(screenW(0.02, context)),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(width: 1),

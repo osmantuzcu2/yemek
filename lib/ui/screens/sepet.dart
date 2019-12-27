@@ -7,6 +7,7 @@ import 'package:mc_jsi/core/dbHelper.dart';
 import 'package:mc_jsi/core/functions.dart';
 import 'package:mc_jsi/core/inh.dart';
 import 'package:mc_jsi/ui/widgets.dart/appbar.dart';
+import 'package:mc_jsi/ui/widgets.dart/blue_bar.dart';
 import 'package:mc_jsi/ui/widgets.dart/bottom_menu.dart';
 import 'package:mc_jsi/ui/widgets.dart/drawer.dart';
 import 'package:mc_jsi/ui/widgets.dart/green_bar.dart';
@@ -163,7 +164,7 @@ class _BasketState extends State<Basket> {
             context: context,
             title: '',
             desc:
-                "Siparişinizi aldık. Gelişmeleri sipariş durumlarından izleyebilirsiniz.",
+                "Wir haben Ihre Bestellung erhalten. Sie können Entwicklungen vom Auftragsstatus aus verfolgen.",
             buttons: [
               DialogButton(
                 onPressed: () {
@@ -171,7 +172,7 @@ class _BasketState extends State<Basket> {
                   Navigator.pushNamed(context, Constants.ROUTE_ORDER_HISTORY);
                 },
                 color: Colors.blue,
-                child: Text('Okey'),
+                child: Text('Okay'),
               ),
             ],
           ).show();
@@ -180,10 +181,10 @@ class _BasketState extends State<Basket> {
       });
     });
   }
-  else toast('Adres seçmediniz');
+  else toast('Sie haben keine Adresse ausgewählt');
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Future<bool> _onWillPop() {
     return showDialog(
           context: context,
@@ -196,6 +197,7 @@ class _BasketState extends State<Basket> {
     if (dataAddress.isEmpty) {
       _getAddresses();
     }
+
     return WillPopScope(
       onWillPop: _onWillPop,
           child: Scaffold(
@@ -225,7 +227,9 @@ class _BasketState extends State<Basket> {
               children: <Widget>[
                 Container(
                   color: green1,
-                  height: screenH(0.06, context),
+                  height: screenH(
+                  screenH(1, context) > 800 ? 0.04 : 0.06
+                    , context),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -295,7 +299,7 @@ class _BasketState extends State<Basket> {
                                                                   decoration:
                                                                       InputDecoration(
                                                                           hintText:
-                                                                              'Adress Name'),
+                                                                              'Adresse Name'),
                                                                   controller:
                                                                       adressInputN),
                                                             ),
@@ -307,7 +311,7 @@ class _BasketState extends State<Basket> {
                                                                   decoration:
                                                                       InputDecoration(
                                                                           hintText:
-                                                                              'Your Adress'),
+                                                                              'Ihre Adresse'),
                                                                   controller:
                                                                       adressInputA),
                                                             ),
@@ -317,7 +321,7 @@ class _BasketState extends State<Basket> {
                                                                       10),
                                                               child: DialogButton(
                                                                 child: Text(
-                                                                  'DONE',
+                                                                  'ERLEDIGT',
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .white),
@@ -352,7 +356,7 @@ class _BasketState extends State<Basket> {
                                             Navigator.pop(context);
                                           },
                                           child: Text(
-                                            'DONE',
+                                            'ERLEDIGT',
                                             style: TextStyle(color: Colors.white),
                                           ),
                                         ),
@@ -371,7 +375,7 @@ class _BasketState extends State<Basket> {
                                 children: <Widget>[
                                   Text(
                                     addressName == ''
-                                        ? 'Select Address'
+                                        ? 'Adresse auswählen'
                                         : addressName,
                                     style: TextStyle(
                                         color: Colors.white,
@@ -389,6 +393,12 @@ class _BasketState extends State<Basket> {
                     ],
                   ),
                 ),
+               
+                  Cookie.of(context).orderType =="1"?
+                  blueBar(context, 'Abholen', 'assets/comeget.svg'):
+                  Cookie.of(context).orderType =="2"?
+                  blueBar(context, 'Liefern', 'assets/service.svg'):Container(),
+                 
                 ListView.builder(
                   primary: false,
                   shrinkWrap: true,
@@ -545,7 +555,7 @@ class _BasketState extends State<Basket> {
                             children: <Widget>[
                               Expanded(
                                 flex: 4,
-                                child: Text('Total Price'),
+                                child: Text('Gesamtpreis'),
                               ),
                               Expanded(
                                 flex: 1,
@@ -562,7 +572,7 @@ class _BasketState extends State<Basket> {
                             Expanded(
                               flex: 4,
                               child: Text(
-                                'Have Promo Code',
+                                'Haben Sie Promo-Code',
                                 style: TextStyle(color: green1),
                               ),
                             ),
@@ -610,7 +620,7 @@ class _BasketState extends State<Basket> {
                         height: screenH(0.07, context),
                         alignment: Alignment.center,
                         child: Text(
-                          'Proceed Confirm Order',
+                          'Weiter Bestellung bestätigen',
                           style: TextStyle(color: Colors.white, fontSize: 17),
                         ),
                       )),

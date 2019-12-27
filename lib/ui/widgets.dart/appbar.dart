@@ -94,7 +94,7 @@ Widget appBar(context, bool back,String background_picture, TextEditingControlle
                   borderSide: BorderSide(color: Colors.grey),
                 ),
                 prefixIcon: Icon(Icons.search,color: Colors.grey,),
-                hintText: 'Search Food',
+                hintText: 'Essen suchen',
                 hintStyle: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -198,7 +198,7 @@ Widget appBar2(context, bool back,String background_picture, TextEditingControll
                   borderSide: BorderSide(color: Colors.grey),
                 ),
                 prefixIcon: Icon(Icons.search,color: Colors.grey,),
-                hintText: 'Search Food',
+                hintText: 'Foodbar',
                 hintStyle: TextStyle(
                   color: Colors.white,
                   fontSize: 14,

@@ -59,8 +59,8 @@ class _PasswordState extends State<Password> {
     super.initState();
    
   }
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: bottomMenu(context,_scaffoldKey),
@@ -80,7 +80,7 @@ class _PasswordState extends State<Password> {
               backgroundColor: Colors.white,
               flexibleSpace: FlexibleSpaceBar(
                   titlePadding: EdgeInsets.all(0),
-                  background: appBarProfile(context, true,'https://tinyfac.es/data/avatars/475605E3-69C5-4D2B-8727-61B7BB8C4699-500w.jpeg')
+                  background: appBarProfile(context, true,Cookie.of(context).userAvatarUrl)
                   ),
             ),
             
@@ -103,7 +103,6 @@ class _PasswordState extends State<Password> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                           Icon(Icons.star,color: Colors.yellow[700],),
-                          Text('865 Puan',style: TextStyle(color: Colors.yellow[700],),)
                         ],),
                       
                         Row(
@@ -122,11 +121,11 @@ class _PasswordState extends State<Password> {
                               controller: mevcutText,
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return 'Mevcut Parola';
+                                  return 'Strom Passwort';
                                 }
                                 return null;
                               },
-                              decoration: input('Mevcut Parola ', 'Parola giriniz'),
+                              decoration: input('Strom Passwort ', 'Geben Sie Ihr Passwort ein'),
                               onSaved: (String value) {
                                 print("Value : $value");
                               },
@@ -150,11 +149,11 @@ class _PasswordState extends State<Password> {
                               controller: yeniText,
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return 'Yeni Parola';
+                                  return 'Neues Passwort';
                                 }
                                 return null;
                               },
-                              decoration: input('Yeni Parola ', 'Yeni Parola giriniz'),
+                              decoration: input('Neues Passwort ', 'Geben Sie Ihr Neues Passwort ein'),
                               onSaved: (String value) {
                                 print("Value : $value");
                               },
@@ -178,11 +177,11 @@ class _PasswordState extends State<Password> {
                               controller: yeniText2,
                               validator: (value) {
                                 if (value.isEmpty) {
-                                  return 'Yeni Parola';
+                                  return 'Neues Passwort';
                                 }
                                 return null;
                               },
-                              decoration: input('Yeni Parola ', 'Yeni Parola giriniz'),
+                              decoration: input('Neues Passwort ', 'Geben Sie Ihr Neues Passwort ein'),
                               onSaved: (String value) {
                                 print("Value : $value");
                               },
@@ -218,7 +217,7 @@ class _PasswordState extends State<Password> {
                                 ),
                               ],
                           ),
-                          child: Text('GÜNCELLE',
+                          child: Text('Aktualisieren',
                           style: TextStyle(color:green1),
                           )),
                       )

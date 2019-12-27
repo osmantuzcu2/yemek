@@ -18,6 +18,7 @@ class ComeGet extends StatefulWidget {
 }
 
 class _ComeGetState extends State<ComeGet> {
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
    var searchText = TextEditingController();
   @override
   void initState() {
@@ -42,7 +43,6 @@ class _ComeGetState extends State<ComeGet> {
     });
   }
   @override
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -71,7 +71,7 @@ class _ComeGetState extends State<ComeGet> {
           child:Column(
             children: <Widget>[
               greenbar(context),
-              blueBar(context, 'Gel Al', 'assets/comeget.svg'),
+              blueBar(context, 'Abholen', 'assets/comeget.svg'),
                 Container(
                   padding:EdgeInsets.only(
                         right:screenW(0.05, context),

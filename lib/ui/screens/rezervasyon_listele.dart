@@ -87,7 +87,7 @@ class _ReservationListState extends State<ReservationList> {
     _getdata();
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +116,7 @@ class _ReservationListState extends State<ReservationList> {
               child: Column(
             children: <Widget>[
               greenbar(context),
-              blueBar(context, 'ReservationList', 'assets/calendar.svg'),
+              blueBar(context, 'Tisch Reservierensliste', 'assets/calendar.svg'),
               ListView.builder(
                 primary: false,
                 shrinkWrap: true,

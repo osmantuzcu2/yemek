@@ -44,16 +44,16 @@ Widget hata(String label, String path,context){
 //exit
 Widget exit(context){
   return  AlertDialog(
-            title: new Text('Emin misiniz?'),
-            content: new Text('Uygulamadan çıkmak istiyor musun?'),
+            title: new Text('Bist du sicher?'),
+            content: new Text('Möchten Sie diese App beenden?'),
             actions: <Widget>[
               new FlatButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('Hayır'),
+                child: new Text('Nein'),
               ),
               new FlatButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: new Text('Evet'),
+                child: new Text('Ja'),
               ),
             ],
           );
