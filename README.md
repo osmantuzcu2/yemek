@@ -1,6 +1,7 @@
 # mc_jsi
 
-A new Flutter project by Novem Softvare
+Order Food Project by Novem Sofware
+ver: 0.01
 
 ## Getting Started
 
